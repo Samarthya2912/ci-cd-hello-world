@@ -26,10 +26,10 @@ jobs:
           node-version: 12.x
       # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: cd frontend && npm install && cd ..
       # Build
       - name: Build
-        run: npm run build
+        run: cd frontend && npm run build && cd ..
       # Deploy
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -37,4 +37,4 @@ jobs:
           # GitHub token
           github_token: ${{ secrets.CI_CD_HELLO_WORLD_TOKEN }}
           # Build directory
-          publish_dir: ./build
+          publish_dir: ./frontend/build

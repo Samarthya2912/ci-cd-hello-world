@@ -1,0 +1,40 @@
+# Triggers
+on:
+  push:
+    branches:
+      - main
+
+# Jobs
+jobs:
+  # Build and deploy
+  deploy:
+    # Operating system
+    runs-on: ubuntu-latest
+    # Steps
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          # Node.js version
+          node-version: 12.x
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+      # Build
+      - name: Build
+        run: npm run build
+      # Deploy
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # GitHub token
+          github_token: ${{ secrets.CI_CD_HELLO_WORLD_TOKEN }}
+          # Build directory
+          publish_dir: ./build
